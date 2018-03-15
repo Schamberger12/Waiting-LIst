@@ -7,7 +7,7 @@ typedef struct Node {
 
 	char* name;
 	int size;
-	enum status { here = 1, called = 0 };
+	enum status { here = 1, called = 0 } phoned;
 	Node *next;
 
 }Node;
