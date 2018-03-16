@@ -169,8 +169,6 @@ void printCommands()
 int main(int argc, char **argv)
 {
 	Queue *q = (Queue*)malloc(sizeof(Queue));
-	q->Head = NULL;
-	q->Tail = NULL;
 	char *input;
 	int ch;
 	

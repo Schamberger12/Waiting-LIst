@@ -16,7 +16,7 @@ typedef struct Node {
 	char *name;
 	int size;
 	called phoned;
-	Node *next;
+	struct Node *next;
 
 }Node;
 

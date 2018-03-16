@@ -48,7 +48,7 @@ void doCallAhead(Queue *q)
 {
 	/* get group size from input */
 	int size = getPosInt();
-	called phoned = CALLED;
+	
 	if (size < 1)
 	{
 		printf("Error: Call-ahead command requires an integer value of at least 1\n");
@@ -71,7 +71,9 @@ void doCallAhead(Queue *q)
 
 	printf("Adding Call-ahead group \"%s\" of size %d\n", name, size);
 
-	int truth = doesNameExist(name);
+	called phoned = CALLED;
+
+	int truth = doesNameExist(name, q);
 
 	if (truth == 0)
 		addToList(q, name, size, phoned);
@@ -173,4 +175,5 @@ void doDisplay(Queue* q)
 	printf("Display information about all groups\n");
 
 	displayListInformation(q);
+	return;
 }

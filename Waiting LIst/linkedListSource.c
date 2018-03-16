@@ -10,6 +10,7 @@ void addToList(Queue *q, char* name, int size, called phoned) {
 	temp->name = name;
 	temp->size = size;
 	temp->phoned = phoned;
+	temp->next = NULL;
 
 	if (q->Head == NULL) {
 		q->Head = temp;
@@ -17,8 +18,8 @@ void addToList(Queue *q, char* name, int size, called phoned) {
 	}
 
 	q->Tail->next = temp;
-	q->Tail = temp;
-
+	q->Tail = q->Tail->next;
+	return;
 }
 
 int doesNameExist(char *name, Queue *q)
@@ -111,25 +112,28 @@ void displayGroupSizeAhead(Queue* q, int n)
 	return;
 }
 
-void displayListInformation(Queue* q) 
+void displayListInformation(Queue* q)
 {
 	Node* temp = q->Head;
-	int i;
-
-	while (temp != NULL) {
-		printf("%d: %s, party of %d", i+1, temp->name, temp->size);
-		if (temp->phoned == IN_HOUSE)
-			printf("In House\n");
-		else {
-			printf("Called in\n");
+	int t = 0;
+	temp->phoned;
+	if (temp->phoned == IN_HOUSE)
+		t = 1;
+	else
+		t = 0;
+		while (temp != NULL) {
+			printf("%s, party of %d", temp->name, temp->size);
+			if (t = 1)
+				printf(" In House\n");
+			else
+				printf(" called in\n");
+			temp = temp->next;
 		}
-		i++;
-		temp = temp->next;
+		return;
+
+
 	}
-	return;
 
-
-}
 
 
 
