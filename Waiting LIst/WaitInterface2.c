@@ -5,9 +5,10 @@
 #include "WaitHead.h"
 
 
-void doAdd()
+void doAdd(Queue* q)
 {
 	/* get group size from input */
+	called phoned = IN_HOUSE;
 	int size = getPosInt();
 	if (size < 1)
 	{
@@ -31,14 +32,23 @@ void doAdd()
 
 	printf("Adding In-restaurant group \"%s\" of size %d\n", name, size);
 
-	// add code to perform this operation here
+	int truth = doesNameExist(name, q);
+
+	if (truth == 0)
+		addToList(q, name, size, phoned);
+	else {
+		printf("That name is already in the system, please re-enter with a different name\n");
+	}
+
+	
 }
 
 
-void doCallAhead()
+void doCallAhead(Queue* q)
 {
 	/* get group size from input */
 	int size = getPosInt();
+	called phoned = CALLED;
 	if (size < 1)
 	{
 		printf("Error: Call-ahead command requires an integer value of at least 1\n");
@@ -61,10 +71,16 @@ void doCallAhead()
 
 	printf("Adding Call-ahead group \"%s\" of size %d\n", name, size);
 
-	// add code to perform this operation here
+	int truth = doesNameExist(name);
+
+	if (truth == 0)
+		addToList(q, name, size, phoned);
+	else {
+		printf("That name is already in the system, please re-enter with a different name\n");
+	}
 }
 
-void doWaiting()
+void doWaiting(Queue* q)
 {
 	/* get group name from input */
 	char *name = getName();
@@ -75,13 +91,22 @@ void doWaiting()
 		printf("  where: <name> is the name of the group that is now waiting\n");
 		return;
 	}
+	
+	int truth = doesNameExist(name, q);
+		if (truth == 1) {
+			printf("Call-ahead group \"%s\" is now waiting in the restaurant\n", name);
+			updateStatus(q, name);
+		}
+		else {
+			printf("There is no such party, please try again\n");
+		}
+	
+	return;
 
-	printf("Call-ahead group \"%s\" is now waiting in the restaurant\n", name);
 
-	// add code to perform this operation here
 }
 
-void doRetrieve()
+void doRetrieve(Queue* q)
 {
 	/* get table size from input */
 	int size = getPosInt();
@@ -93,12 +118,25 @@ void doRetrieve()
 		return;
 	}
 	clearToEoln();
-	printf("Retrieve (and remove) the first group that can fit at a tabel of size %d\n", size);
+	printf("Retrieve (and remove) the first group that can fit at a table of size %d\n", size);
 
-	// add code to perform this operation here
+	Node* temp = retrieveAndRemove(size, q);
+
+	if (temp == NULL) {
+		printf("There are no tables currently availble for that size\n");
+		return;
+	}
+
+	else {
+		printf("%s, your table is ready, bon appetit!\n", temp->name); 
+		free(temp);
+	}
+	return;
+
+
 }
 
-void doList()
+void doList(Queue* q)
 {
 	/* get group name from input */
 	char *name = getName();
@@ -110,15 +148,29 @@ void doList()
 		return;
 	}
 
-	printf("Group \"%s\" is behind the following groups\n", name);
+	int truth = doesNameExist(name, q);
+	if (truth == 0) {
+		printf("There is no group with that name, please try again\n");
+		return;
+	}
 
-	// add code to perform this operation here
+	else {
+		printf("Group \"%s\" is behind the following groups\n", name);
+		int groupNums = countGroupsAhead(q, name);
+		displayGroupSizeAhead(q, groupNums);
+
+
+	}
+
+	
+
+	
 }
 
-void doDisplay()
+void doDisplay(Queue* q)
 {
 	clearToEoln();
 	printf("Display information about all groups\n");
 
-	// add code to perform this operation here
+	displayListInformation(q);
 }

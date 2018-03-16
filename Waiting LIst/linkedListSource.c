@@ -4,12 +4,12 @@
 
 #include "WaitHead.h"
 
-void addToList(char* name, int size, Queue* q, Node* n, int called ) {
-	Node* temp = malloc(sizeof(temp));
+void addToList(Queue* q, char* name, int size, called phoned) {
+	Node* temp = (Node*)malloc(sizeof(Node));
 
 	temp->name = name;
 	temp->size = size;
-	temp->phoned = called;
+	temp->phoned = phoned;
 
 	if (q->Head == NULL) {
 		q->Head = temp;
@@ -21,20 +21,18 @@ void addToList(char* name, int size, Queue* q, Node* n, int called ) {
 
 }
 
-int doesNameExist( Queue* q, char* name) 
+int doesNameExist(char* name, Queue* q) 
 {
-
-	char nameCheck[30];
+	Node* temp = q->Head;
 	
-	if (q->Head == NULL) {
+	if (temp == NULL) {
 		return 0;
 	}
 
-	Node* temp = q->Head;
 
 	while (temp != NULL) 
 	{
-		if (name == nameCheck)
+		if (temp->name == name)
 			return 1;
 		temp = temp->next;
 	}
@@ -43,38 +41,54 @@ int doesNameExist( Queue* q, char* name)
 
 }
 
-void updateStatus(Node* p) 
-
+void updateStatus(Queue* q, char* name) 
 {
-	
-	//function returns when a person who called ahead arrives to the restuarant
+	Node* temp = q->Head;
+
+	if (temp == NULL) {
+		printf("List is empty\n");
+		return;
+	}
+
+
+	while (temp != NULL)
+	{
+		if (temp->name == name) {
+			temp->phoned = IN_HOUSE;
+			return;
+		}
+		temp = temp->next;
+	}
+
+	return;
 
 }
 
-Node* retrieveAndRemove(Node* p, char* name, Queue* q) 
+Node* retrieveAndRemove(int size, Queue* q)
 {
-	if (q->Head == NULL)
-		return NULL;
-
+	
 	Node* temp = q->Head;
-	q->Head = q->Head->next;
 
-	if (q->Head == NULL)
-		q->Tail = NULL;
+	while ((temp->next != NULL) && (temp->next->size != size) && (temp->next->next->phoned != IN_HOUSE)) {
+		temp = temp->next;
+	}
+	if (temp == NULL) {
+		return NULL;
+	}
+
 	return temp;
 }
 
-int countGroupsAhead(Node* p, Queue* q) 
+int countGroupsAhead(Queue* q, char* name) 
 {
 	int groupNum = 0;
+	Node* temp = q->Head;
 
-	if (p == NULL || p->next == NULL) {
+	if (temp == NULL) {
 		return 0;
 	}
 
-	Node* temp = p;
-
-	while (temp != NULL) {
+	while (temp->name != name) {
 		groupNum++;
 		temp = temp->next;
 	}
@@ -84,21 +98,36 @@ int countGroupsAhead(Node* p, Queue* q)
 
 }
 
-int displayGroupSizeAhead(Node* p, Queue* q) 
+void displayGroupSizeAhead(Queue* q, int n) 
 {
-	int groupSize = 0;
-
-	if (p->next == NULL) {
-		return 0;
-	}
-
-	groupSize = p->next->size;
 	
-	return groupSize;
+	Node* temp = q->Head;
+	int i;
+
+	for (i = 0; i < n; i++) {
+		printf("%d: %s, party of %d\n", i+1, temp->name, temp->size);
+	}
+	
+	return;
 }
 
-void displayListInformation(Node* p, Queue* q) 
+void displayListInformation(Queue* q) 
 {
+	Node* temp = q->Head;
+	int i;
+
+	while (temp != NULL) {
+		printf("%d: %s, party of %d", i+1, temp->name, temp->size);
+		if (temp->phoned == IN_HOUSE)
+			printf("In House\n");
+		else {
+			printf("Called in\n");
+		}
+		i++;
+		temp = temp->next;
+	}
+	return;
+
 
 }
 

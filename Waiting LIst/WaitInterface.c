@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "WaitHead.h"
+
 typedef enum { FALSE = 0, TRUE, NO = 0, YES } boolean;
 
 /* forward definition of functions */
@@ -166,9 +168,12 @@ void printCommands()
 
 int main(int argc, char **argv)
 {
-
+	Queue *q = (Queue*)malloc(sizeof(Queue));
+	q->Head = NULL;
+	q->Tail = NULL;
 	char *input;
 	int ch;
+	
 
 	printf("Starting Restaurant Wait List Program\n\n");
 	printf("Enter command: ");
@@ -187,27 +192,27 @@ int main(int argc, char **argv)
 		}
 		else if ('a' == ch)
 		{
-			doAdd();
+			doAdd(q);
 		}
 		else if ('c' == ch)
 		{
-			doCallAhead();
+			doCallAhead(q);
 		}
 		else if ('w' == ch)
 		{
-			doWaiting();
+			doWaiting(q);
 		}
 		else if ('r' == ch)
 		{
-			doRetrieve();
+			doRetrieve(q);
 		}
 		else if ('l' == ch)
 		{
-			doList();
+			doList(q);
 		}
 		else if ('d' == ch)
 		{
-			doDisplay();
+			doDisplay(q);
 		}
 		else if ('\n' == ch)
 		{

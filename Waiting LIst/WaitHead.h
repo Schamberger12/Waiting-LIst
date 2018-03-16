@@ -3,11 +3,17 @@
 #include <string.h>
 
 
+typedef enum
+{
+	CALLED = 0,
+	IN_HOUSE = 1
+}called;
+
 typedef struct Node {
 
 	char* name;
 	int size;
-	enum status { here = 1, called = 0 } phoned;
+	called phoned;
 	Node *next;
 
 }Node;
