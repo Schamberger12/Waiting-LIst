@@ -4,7 +4,7 @@
 
 #include "WaitHead.h"
 
-void addToList(Queue* q, char* name, int size, called phoned) {
+void addToList(Queue *q, char* name, int size, called phoned) {
 	Node* temp = (Node*)malloc(sizeof(Node));
 
 	temp->name = name;
@@ -21,9 +21,9 @@ void addToList(Queue* q, char* name, int size, called phoned) {
 
 }
 
-int doesNameExist(char* name, Queue* q) 
+int doesNameExist(char *name, Queue *q)
 {
-	Node* temp = q->Head;
+	Node *temp = q->Head;
 	
 	if (temp == NULL) {
 		return 0;
@@ -41,9 +41,9 @@ int doesNameExist(char* name, Queue* q)
 
 }
 
-void updateStatus(Queue* q, char* name) 
+void updateStatus(Queue *q, char *name)
 {
-	Node* temp = q->Head;
+	Node *temp = q->Head;
 
 	if (temp == NULL) {
 		printf("List is empty\n");
@@ -64,7 +64,7 @@ void updateStatus(Queue* q, char* name)
 
 }
 
-Node* retrieveAndRemove(int size, Queue* q)
+Node* retrieveAndRemove(int size, Queue *q)
 {
 	
 	Node* temp = q->Head;

@@ -5,7 +5,7 @@
 #include "WaitHead.h"
 
 
-void doAdd(Queue* q)
+void doAdd(Queue *q)
 {
 	/* get group size from input */
 	called phoned = IN_HOUSE;
@@ -44,7 +44,7 @@ void doAdd(Queue* q)
 }
 
 
-void doCallAhead(Queue* q)
+void doCallAhead(Queue *q)
 {
 	/* get group size from input */
 	int size = getPosInt();
