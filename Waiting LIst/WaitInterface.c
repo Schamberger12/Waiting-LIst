@@ -10,7 +10,8 @@
 
 #include "WaitHead.h"
 
-typedef enum { FALSE = 0, TRUE, NO = 0, YES } boolean;
+#include<stdio.h>
+
 
 /* forward definition of functions */
 void clearToEoln();
@@ -168,10 +169,21 @@ void printCommands()
 
 int main(int argc, char **argv)
 {
-	Queue *q = (Queue*)malloc(sizeof(Queue));
+
+	DebugMode = FALSE;						//sets debugmode to false
+	int i;
+	for (i = 0; i < argc; i++) {			//sets debugmode to true if -d is found
+		if (strcmp(argv[i], "-d") == 0)
+			DebugMode = TRUE;
+	}
+	Queue* q = (Queue*)malloc(sizeof(Queue));	//allocates instance of queue(to allow for use of both q-Head & q-Tail.
+	q->Head = NULL;	//sets head to NULL
+	q->Tail = NULL;	//sets tail to NULL
+	
+
 	char *input;
 	int ch;
-	
+
 
 	printf("Starting Restaurant Wait List Program\n\n");
 	printf("Enter command: ");
